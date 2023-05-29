@@ -39,9 +39,8 @@ class BaseRepository implements BaseRepositoryInterface
 
     public function addToUser($request)
     {
-        // $user = Auth::user();
-        // $userId = $user->id;
-        $userId = 1;
+        $user = Auth::user();
+        $userId = $user->id;
         $user = User::findOrFail($userId);
         //         dump( $user->sources());
         // dd($this->model === Author::class);

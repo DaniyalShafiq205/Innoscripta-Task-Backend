@@ -1,0 +1,955 @@
+{
+	"info": {
+		"_postman_id": "f8f76da1-953e-4837-b944-451c2a768db3",
+		"name": "Laravel User Auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12060636"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"if (jsonData.token) {\r",
+							"    pm.environment.set('token', jsonData.token);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Mehmood Shafiq\",\n  \"email\": \"mehmood@example.com\",\n  \"password\": \"password123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/register",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// var jsonData = pm.response.json();\r",
+							"\r",
+							"// if (jsonData.token) {\r",
+							"//     pm.environment.set('token', jsonData.token);\r",
+							"// }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"admin@gmail.com\",\n  \"password\": \"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Me",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"if (jsonData.token) {\r",
+							"    pm.environment.set('token', jsonData.token);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/me",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// var jsonData = pm.response.json();\r",
+							"\r",
+							"// if (jsonData.token) {\r",
+							"//     pm.environment.set('token', jsonData.token);\r",
+							"// }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/refresh",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Preferences List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// var jsonData = pm.response.json();\r",
+							"\r",
+							"// if (jsonData.token) {\r",
+							"//     pm.environment.set('token', jsonData.token);\r",
+							"// }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/preferences",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"preferences"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authors Detail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// var jsonData = pm.response.json();\r",
+							"\r",
+							"// if (jsonData.token) {\r",
+							"//     pm.environment.set('token', jsonData.token);\r",
+							"// }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/authors/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"authors",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Preferences Update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// var jsonData = pm.response.json();\r",
+							"\r",
+							"// if (jsonData.token) {\r",
+							"//     pm.environment.set('token', jsonData.token);\r",
+							"// }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sources\":[3,4],\r\n    \"categories\":[1,4],\r\n    \"authors\":[5,4]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/preferences/addToUser",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"preferences",
+						"addToUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Categories List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// var jsonData = pm.response.json();\r",
+							"\r",
+							"// if (jsonData.token) {\r",
+							"//     pm.environment.set('token', jsonData.token);\r",
+							"// }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/categories",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Categories Detail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// var jsonData = pm.response.json();\r",
+							"\r",
+							"// if (jsonData.token) {\r",
+							"//     pm.environment.set('token', jsonData.token);\r",
+							"// }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/categories/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"categories",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Categories Update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// var jsonData = pm.response.json();\r",
+							"\r",
+							"// if (jsonData.token) {\r",
+							"//     pm.environment.set('token', jsonData.token);\r",
+							"// }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ids\":[4,3]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/categories/addToUser",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"categories",
+						"addToUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sources List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// var jsonData = pm.response.json();\r",
+							"\r",
+							"// if (jsonData.token) {\r",
+							"//     pm.environment.set('token', jsonData.token);\r",
+							"// }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/sources",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"sources"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sources Detail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// var jsonData = pm.response.json();\r",
+							"\r",
+							"// if (jsonData.token) {\r",
+							"//     pm.environment.set('token', jsonData.token);\r",
+							"// }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/sources/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"sources",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sources Update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// var jsonData = pm.response.json();\r",
+							"\r",
+							"// if (jsonData.token) {\r",
+							"//     pm.environment.set('token', jsonData.token);\r",
+							"// }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ids\":[2,3]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/sources/addToUser",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"sources",
+						"addToUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/logout",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Article Search",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/articles?keyword=Testing&from=2023-05-01&to=2023-05-10&page=2&api=guardian",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"articles"
+					],
+					"query": [
+						{
+							"key": "keyword",
+							"value": "Testing"
+						},
+						{
+							"key": "from",
+							"value": "2023-05-01"
+						},
+						{
+							"key": "to",
+							"value": "2023-05-10"
+						},
+						{
+							"key": "category",
+							"value": "Technology",
+							"disabled": true
+						},
+						{
+							"key": "source",
+							"value": "bbc",
+							"disabled": true
+						},
+						{
+							"key": "pageSize",
+							"value": "2",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "2"
+						},
+						{
+							"key": "api",
+							"value": "guardian",
+							"description": "news,nyt,guardian"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000/api",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vaW5ub3NjcmlwdGFhcHAudGVzdC9hcGkvbG9naW4iLCJpYXQiOjE2ODUwNTExMTAsImV4cCI6MTY4NTA1NDcxMCwibmJmIjoxNjg1MDUxMTEwLCJqdGkiOiJlOUtDYzhyZUNvUHJ1SVlQIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.ZtuOwEELbmzxosGJWYYuFM0UvQ79zR2IQzraL7DLCsA",
+			"type": "string"
+		}
+	]
+}

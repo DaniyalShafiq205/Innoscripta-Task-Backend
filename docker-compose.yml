@@ -1,45 +1,57 @@
 version: '3'
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: Innoscripta
-    ports:
-      - 8000:9000
-    volumes:
-      - .:/var/www/html
-    environment:
-      - APP_ENV=local
-      - APP_KEY=base64:your_application_key
-      - DB_CONNECTION=mysql
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_DATABASE=InnoScripta
-      - DB_USERNAME=root
-      - DB_PASSWORD=
-    depends_on:
-        - db
-        - keygen
-    command: bash -c "php artisan key:generate && php artisan migrate --force && php artisan db:seed --force && php-fpm"
+    laravel.test:
+        build:
+            context: ./vendor/laravel/sail/runtimes/8.2
+            dockerfile: Dockerfile
+            args:
+                WWWGROUP: '${WWWGROUP}'
+        image: sail-8.2/app
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        ports:
+            - '8000:80'
+            - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
+        environment:
+            WWWUSER: '${WWWUSER}'
+            LARAVEL_SAIL: 1
+            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
+            XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
+            IGNITION_LOCAL_SITES_PATH: '${PWD}'
+        volumes:
+            - '.:/var/www/html:cached'
+        networks:
+            - sail
+        depends_on:
+            - mysql
+        container_name: laravel-app
+        command: >
+            bash -c "cp .env.example .env &&
+            composer install &&
+            php artisan optimize &&
+            php artisan key:generate &&
+            php artisan migrate:refresh --force &&
+            php artisan db:seed --force &&
+            php artisan optimize &&
+            /usr/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80"
 
+    mysql:
+        image: mariadb
+        environment:
+            - MYSQL_DATABASE=InnoScripta
+            - MYSQL_USER=admin
+            - MYSQL_PASSWORD=admin
+            - MYSQL_ROOT_PASSWORD=admin
+        ports:
+            - '3300:3306'
+        volumes:
+            - dbdata:/var/lib/mysql
+        networks:
+            - sail
+        container_name: laravel-db
 
-  db:
-    image: mariadb
-    environment:
-      - MYSQL_DATABASE=InnoScripta
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=
-      - MYSQL_ROOT_PASSWORD=
-    volumes:
-      - dbdata:/var/lib/mysql
-
-  keygen:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - .:/var/www/html
-    command: php artisan key:generate
+networks:
+    sail:
+        driver: bridge
 volumes:
   dbdata:

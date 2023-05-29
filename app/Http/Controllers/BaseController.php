@@ -26,7 +26,7 @@ class BaseController extends Controller
     {
 
 
-        $maxValue = 5; // Default max value
+        $maxValue = 5; 
 
 
         $validator = Validator::make($request->all(), [
@@ -37,8 +37,6 @@ class BaseController extends Controller
             'authors' => ['nullable', 'array'],
             'authors.*' => ['gt:0', 'lte:' . $maxValue, 'integer'],
         ]);
-
-
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);

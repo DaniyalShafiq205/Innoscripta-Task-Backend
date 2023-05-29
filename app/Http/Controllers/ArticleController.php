@@ -14,12 +14,7 @@ class ArticleController extends Controller
 {
     private $newsApiClient;
 
-    // public function __construct()
-    // {
-    //     $this->newsApiClient = new Client([
-    //         'base_uri' => 'https://newsapi.org/v2/',
-    //     ]);
-    // }
+
 
     private $newsAPIService;
     private $nytAPIService;

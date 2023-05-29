@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login'])->name('login');
 
-// Route::middleware('auth:api')->group(function () {
+Route::middleware('jwt.auth')->group(function () {
 
 Route::get('/me', [UserController::class, 'me'])->name('me');
 Route::post('/refresh', [UserController::class, 'refresh']);
@@ -40,4 +40,4 @@ Route::post('/preferences/addToUser', [UserPreferenceController::class, 'addToUs
 
 
 Route::get('/articles', ArticleController::class);
-// });
+});
