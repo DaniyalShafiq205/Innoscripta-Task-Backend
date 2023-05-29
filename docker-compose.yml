@@ -1,0 +1,45 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: Innoscripta
+    ports:
+      - 8000:9000
+    volumes:
+      - .:/var/www/html
+    environment:
+      - APP_ENV=local
+      - APP_KEY=base64:your_application_key
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=InnoScripta
+      - DB_USERNAME=root
+      - DB_PASSWORD=
+    depends_on:
+        - db
+        - keygen
+    command: bash -c "php artisan key:generate && php artisan migrate --force && php artisan db:seed --force && php-fpm"
+
+
+  db:
+    image: mariadb
+    environment:
+      - MYSQL_DATABASE=InnoScripta
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=
+      - MYSQL_ROOT_PASSWORD=
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  keygen:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/var/www/html
+    command: php artisan key:generate
+volumes:
+  dbdata:
