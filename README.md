@@ -6,6 +6,7 @@
 Min Requirements
  
 `Php >= 8.1`
+`Composer >= 2`
 
 ## Installation
 
@@ -33,8 +34,11 @@ Min Requirements
 
 `DB_PASSWORD=admin`
 
-### Up The Containers
+### Up Containers
 `./vendor/bin/sail up -d`
+
+### Remove Containers
+`./vendor/bin/sail down`
 
 ## After it your app will serve at: 
 http://localhost:8000/ if you go with defaults settings
@@ -42,6 +46,8 @@ http://localhost:8000/ if you go with defaults settings
 Note: If you see on this url a break page then just do one thing run `php artisan optimize` inside container sometimes happens due to cache issue.
 
 
+## API Collection: 
+An postman collection is available /postman-collection
 
 ## Authors
 
