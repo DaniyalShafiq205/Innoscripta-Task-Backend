@@ -14,14 +14,16 @@ class NYTimesService
     {
         $baseUri = Config::get('services.nyt.base_uri');
 
-        $this->nytApiClient = new Client([
+        $this->nytApiClient = new Client(
+            [
             'base_uri' => $baseUri,
-        ]);
+            ]
+        );
         $this->apiKey = Config::get('services.nyt.key');
     }
 
     public function searchArticles($request)
-{
+    {
 
         $keyword = $request->input('keyword');
         $from = $request->input('from');
@@ -41,28 +43,30 @@ class NYTimesService
             'sort' => 'newest'
         ];
 
-        if($category)
-        {
-            $query['fq']="section_name:$category";
+        if ($category) {
+            $query['fq'] = "section_name:$category";
         }
 
 
         try {
-            $response = $this->nytApiClient->get('articlesearch.json', [
+            $response = $this->nytApiClient->get(
+                'articlesearch.json',
+                [
                 'query' => $query,
-            ]);
+                ]
+            );
 
             $articles = json_decode($response->getBody(), true)['response']['docs'];
 
-            $filteredArticles = collect($articles)->map(function ($article) {
-                $baseUrl = 'https://'.parse_url($article['web_url'], PHP_URL_HOST);
-                $firstMultimedia = array_shift($article['multimedia']);
-                $image_url=null;
-                if(isset($firstMultimedia['url']))
-                {
-                    $image_url=$baseUrl .'/'.$firstMultimedia['url'];
-                }
-                return [
+            $filteredArticles = collect($articles)->map(
+                function ($article) {
+                    $baseUrl = 'https://' . parse_url($article['web_url'], PHP_URL_HOST);
+                    $firstMultimedia = array_shift($article['multimedia']);
+                    $image_url = null;
+                    if (isset($firstMultimedia['url'])) {
+                        $image_url = $baseUrl . '/' . $firstMultimedia['url'];
+                    }
+                    return [
                     'title' => $article['headline']['main'],
                     'webUrl' => $article['web_url'],
                     'postDate' => $article['pub_date'],
@@ -70,8 +74,9 @@ class NYTimesService
                     'image_url' =>  $image_url,
                     'source' => $article['source'],
                     'excerptContent' => $article['lead_paragraph']
-                ];
-            });
+                    ];
+                }
+            );
 
             return $filteredArticles;
         } catch (\Exception $e) {

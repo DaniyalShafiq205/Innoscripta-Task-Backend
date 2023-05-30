@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-
-
 class BaseController extends Controller
 {
     protected $repository;
@@ -26,23 +24,24 @@ class BaseController extends Controller
     {
 
 
-        $maxValue = 5; 
+        $maxValue = 5;
 
 
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(),
+            [
             'sources' => ['nullable', 'array'],
             'sources.*' => ['gt:0', 'lte:' . $maxValue, 'integer'],
             'categories' => ['nullable', 'array'],
             'categories.*' => ['gt:0', 'lte:' . $maxValue, 'integer'],
             'authors' => ['nullable', 'array'],
             'authors.*' => ['gt:0', 'lte:' . $maxValue, 'integer'],
-        ]);
+            ]
+        );
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
         return $this->repository->addToUser($request);
     }
-
-
 }

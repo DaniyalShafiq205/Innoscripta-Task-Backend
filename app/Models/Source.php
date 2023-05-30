@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Source extends Model
 {
     use HasFactory;
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'user_source')->withTimestamps();
     }
-
 }

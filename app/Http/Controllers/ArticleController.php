@@ -12,10 +12,6 @@ use Illuminate\Support\Facades\Validator;
 
 class ArticleController extends Controller
 {
-    private $newsApiClient;
-
-
-
     private $newsAPIService;
     private $nytAPIService;
     private $guardianAPIService;

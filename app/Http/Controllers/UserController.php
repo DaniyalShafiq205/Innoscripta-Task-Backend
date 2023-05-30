@@ -16,22 +16,27 @@ class UserController extends Controller
     public function register(Request $request)
     {
         // Validate the user input
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(),
+            [
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|min:6',
-        ]);
+            ]
+        );
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
 
         // Create a new user instance
-        $user = new User([
+        $user = new User(
+            [
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-        ]);
+            ]
+        );
 
         // Save the user to the database
         $user->save();
@@ -45,10 +50,13 @@ class UserController extends Controller
     public function login(Request $request)
     {
         // Validate the user input
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(),
+            [
             'email' => 'required|string|email',
             'password' => 'required|string',
-        ]);
+            ]
+        );
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
@@ -107,7 +115,8 @@ class UserController extends Controller
         $user = Auth::user();
         $userId = $user->id;
         $user = User::findOrFail($userId);
-        $user->load([
+        $user->load(
+            [
             'sources' => function ($query) {
                 $query->select('id', 'name');
             },
@@ -118,7 +127,8 @@ class UserController extends Controller
             'authors' => function ($query) {
                 $query->select('id', 'name');
             },
-        ]);
+            ]
+        );
 
         // Remove pivot data from sources,categories and authors
         $user->sources->each->makeHidden('pivot');
@@ -126,7 +136,5 @@ class UserController extends Controller
         $user->authors->each->makeHidden('pivot');
 
         return response()->json(['user' => $user], 200);
-
     }
-
 }

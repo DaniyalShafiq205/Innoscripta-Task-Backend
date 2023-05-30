@@ -9,7 +9,6 @@ class UserPreferenceController extends BaseController
 {
     public function __construct(UserPreferenceRepository $repository)
     {
-        $this->repository=$repository;
+        $this->repository = $repository;
     }
-
 }

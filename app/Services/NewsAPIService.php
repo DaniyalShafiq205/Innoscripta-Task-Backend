@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use Carbon\Carbon;
@@ -13,9 +14,11 @@ class NewsAPIService
     public function __construct()
     {
         $baseUri = Config::get('services.newsapi.base_uri');
-        $this->newsApiClient = new Client([
+        $this->newsApiClient = new Client(
+            [
             'base_uri' => $baseUri,
-        ]);
+            ]
+        );
         $this->apiKey = Config::get('services.newsapi.key');
     }
 
@@ -40,21 +43,25 @@ class NewsAPIService
             'to' => $to,
             'sortBy' => $sortBy,
             'source' => $source,
-            'apiKey' =>$this->apiKey,
+            'apiKey' => $this->apiKey,
             'pageSize' => $pageSize,
             'page' => $page,
             'searchIn' =>  $searchIn ,
         ];
 
         try {
-            $response = $this->newsApiClient->get('everything', [
+            $response = $this->newsApiClient->get(
+                'everything',
+                [
                 'query' => $queryParams,
-            ]);
+                ]
+            );
             $articles = json_decode($response->getBody()->getContents(), true)['articles'];
 
 
-            $articleObjects = collect($articles)->map(function ($article) {
-                return [
+            $articleObjects = collect($articles)->map(
+                function ($article) {
+                    return [
                     'title' => $article['title'],
                     'webUrl' => $article['url'],
                     'postDate' => $article['publishedAt'],
@@ -62,13 +69,14 @@ class NewsAPIService
                     'image_url' => $article['urlToImage'],
                     'source' => $article['source']['name'],
                     'excerptContent' => $article['content'],
-                ];
-            })->toArray();
+                    ];
+                }
+            )->toArray();
 
-            $articleObjects['page']=$page;
+            $articleObjects['page'] = $page;
             return $articleObjects;
         } catch (\Exception $e) {
-            throw new \RuntimeException($e->getMessage(),500);
+            throw new \RuntimeException($e->getMessage(), 500);
         }
     }
 }

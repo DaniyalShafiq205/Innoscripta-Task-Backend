@@ -6,7 +6,6 @@
 Min Requirements
  
 `Php >= 8.1`
-`Composer >= 2`
 
 ## Installation
 
@@ -35,10 +34,10 @@ Min Requirements
 `DB_PASSWORD=admin`
 
 ### Up Containers
-`./vendor/bin/sail up -d`
+`php composer.phar sail-down up`
 
-### Remove Containers
-`./vendor/bin/sail down`
+### Down Containers
+`php composer.phar sail-down`
 
 ## After it your app will serve at: 
 http://localhost:8000/ if you go with defaults settings
@@ -49,7 +48,27 @@ Note: If you see on this url a break page then just do one thing run `php artisa
 ## API Collection: 
 An postman collection is available /postman-collection
 
+## TestCases Coverage : 
+
+#### 1. To Check Whats The percentage of Test-Coverage Goto Container Terminal And Run:
+`composer coverage`
+
+#### 2. To Create Test-Coverage Report Goto Container Terminal And Run:
+`composer phpunit-coverage`
+
+
+
+#### Note: I will also Attach The Resultant ScreenShot Below
+
+#### Test Percentage
+![Test Results](./Test_Coverage_Percentage.png)
+
+
+#### Test Report
+![Test Results](./htmlReport.png)
+
+`This Report is present in ./coverage/index.html`.
+
 ## Authors
 
 - [@mehmood](https://mehmoodshafiq205@gmail.com)
-

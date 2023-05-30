@@ -17,9 +17,11 @@ use App\Http\Controllers\UserPreferenceController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:sanctum')->get(
+    '/user', function (Request $request) {
+        return $request->user();
+    }
+);
 
 
 
@@ -27,17 +29,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login'])->name('login');
 
-Route::middleware('jwt.auth')->group(function () {
+Route::middleware('jwt.auth')->group(
+    function () {
 
-Route::get('/me', [UserController::class, 'me'])->name('me');
-Route::post('/refresh', [UserController::class, 'refresh']);
-Route::post('/logout', [UserController::class, 'logout']);
-
-
-
-Route::get('/preferences', [UserPreferenceController::class, 'index']);
-Route::post('/preferences/addToUser', [UserPreferenceController::class, 'addToUser']);
+        Route::get('/me', [UserController::class, 'me'])->name('me');
+        Route::post('/refresh', [UserController::class, 'refresh']);
+        Route::post('/logout', [UserController::class, 'logout']);
 
 
-Route::get('/articles', ArticleController::class);
-});
+
+        Route::get('/preferences', [UserPreferenceController::class, 'index']);
+        Route::post('/preferences/addToUser', [UserPreferenceController::class, 'addToUser']);
+
+
+        Route::get('/articles', ArticleController::class);
+    }
+);

@@ -11,7 +11,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -44,10 +46,10 @@ class User extends Authenticatable implements JWTSubject
     ];
 
      /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
+      * Get the identifier that will be stored in the subject claim of the JWT.
+      *
+      * @return mixed
+      */
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -77,5 +79,4 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany(Category::class, 'user_categories')->withTimestamps()->withPivot([]);
     }
-
 }

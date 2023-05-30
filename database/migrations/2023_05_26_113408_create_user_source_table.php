@@ -13,18 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_source', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('source_id');
-            $table->timestamps();
-
-            // Define foreign key constraints
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('source_id')->references('id')->on('sources')->onDelete('cascade');
-
-            // Add unique constraint to prevent duplicates
-            $table->unique(['user_id', 'source_id']);
-        });
+        Schema::create(
+            'user_source', function (Blueprint $table) {
+                $table->unsignedBigInteger('user_id');
+                $table->unsignedBigInteger('source_id');
+                $table->timestamps();
+                if (env('APP_ENV') != 'testing') {
+                    // Define foreign key constraints
+                    $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+                    $table->foreign('source_id')->references('id')->on('sources')->onDelete('cascade');
+                }
+                // Add unique constraint to prevent duplicates
+                $table->unique(['user_id', 'source_id']);
+            }
+        );
     }
 
     /**

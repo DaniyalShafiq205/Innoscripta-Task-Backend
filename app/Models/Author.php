@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Author extends Model
 {
     use HasFactory;
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'user_authors')->withTimestamps();

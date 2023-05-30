@@ -9,7 +9,6 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Repository\BaseRepositoryInterface;
 
-
 class BaseRepository implements BaseRepositoryInterface
 {
     public function getAll()
@@ -45,9 +44,9 @@ class BaseRepository implements BaseRepositoryInterface
         //         dump( $user->sources());
         // dd($this->model === Author::class);
 
-        $sourcesIds=$request->sources;
-        $categoriesIds=$request->categories;
-        $authorsIds=$request->authors;
+        $sourcesIds = $request->sources;
+        $categoriesIds = $request->categories;
+        $authorsIds = $request->authors;
 
 
 
@@ -56,7 +55,7 @@ class BaseRepository implements BaseRepositoryInterface
 
             $user->categories()->detach();
             $user->categories()->syncWithoutDetaching($categoriesIds);
-            
+
             $user->authors()->detach();
             $user->authors()->syncWithoutDetaching($authorsIds);
 

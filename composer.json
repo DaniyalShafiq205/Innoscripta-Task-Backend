@@ -20,7 +20,8 @@
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
         "phpunit/phpunit": "^9.5.10",
-        "spatie/laravel-ignition": "^1.0"
+        "spatie/laravel-ignition": "^1.0",
+        "squizlabs/php_codesniffer": "^3.7"
     },
     "autoload": {
         "psr-4": {
@@ -47,7 +48,16 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ]
+        ],
+        "coverage": "php artisan optimize && XDEBUG_MODE=coverage php artisan test --coverage",
+
+        "phpunit-coverage":"php artisan optimize && vendor/bin/phpunit --coverage-html coverage",
+
+        "sail-up":"./vendor/bin/sail up -d" ,
+
+        "sail-down":"./vendor/bin/sail down" ,
+
+        "phpcbf":"./vendor/bin/phpcbf   --standard=PSR12 ./app"
     },
     "extra": {
         "laravel": {
