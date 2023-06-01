@@ -28,16 +28,16 @@ class ArticleController extends Controller
 
 
         if (env('APP_ENV') != 'testing') {
-            $articles = $this->newsAPIService->searchArticles($request);
-            if (!empty($articles)) {
-                return response()->json($articles);
-            }
 
             $articles = $this->nytAPIService->searchArticles($request);
             if (!empty($articles)) {
                 return response()->json($articles);
             }
 
+            $articles = $this->newsAPIService->searchArticles($request);
+            if (!empty($articles)) {
+                return response()->json($articles);
+            }
             $articles = $this->guardianAPIService->searchArticles($request);
 
             return response()->json($articles);
