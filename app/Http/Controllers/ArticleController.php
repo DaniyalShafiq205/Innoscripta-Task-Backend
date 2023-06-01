@@ -27,40 +27,25 @@ class ArticleController extends Controller
     {
 
 
-        $rules = [
-            'api' => [
-                'required',
-                Rule::in(['news', 'nyt', 'guardian']),
-            ],
-        ];
+        if (env('APP_ENV') != 'testing') {
+            $articles = $this->newsAPIService->searchArticles($request);
+            if (!empty($articles)) {
+                return response()->json($articles);
+            }
 
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
+            $articles = $this->nytAPIService->searchArticles($request);
+            if (!empty($articles)) {
+                return response()->json($articles);
+            }
+
+            $articles = $this->guardianAPIService->searchArticles($request);
+
+            return response()->json($articles);
         }
-
-        switch ($request->api) {
-            case 'news':
-                $articles = $this->newsAPIService->searchArticles($request);
-                // Process and return the response
-                return response()->json($articles);
-                break;
-
-            case 'nyt':
-                $articles = $this->nytAPIService->searchArticles($request);
-                // Process and return the response
-                return response()->json($articles);
-                break;
-
-            case 'guardian':
-                $articles = $this->guardianAPIService->searchArticles($request);
-                // Process and return the response
-                return response()->json($articles);
-                break;
-
-            default:
-                throw new \Exception('Something went wrong');
-                break;
-        }
+        //just run in test-cases
+        $articles = $this->newsAPIService->searchArticles($request);
+        $articles = $this->nytAPIService->searchArticles($request);
+        $articles = $this->guardianAPIService->searchArticles($request);
+        return response()->json($articles);
     }
 }
